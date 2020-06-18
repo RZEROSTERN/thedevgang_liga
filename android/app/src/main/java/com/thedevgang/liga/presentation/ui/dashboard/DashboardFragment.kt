@@ -94,19 +94,23 @@ class DashboardFragment : Fragment() {
             }
 
             R.id.nav_teams -> {
-                toast("Selected Teams")
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_dashboardFragment_to_teamsFragment)
             }
 
             R.id.nav_messages -> {
-                toast("Selected Messages")
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_dashboardFragment_to_messagesFragment)
             }
 
             R.id.nav_upcoming -> {
-                toast("Selected Upcoming")
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_dashboardFragment_to_upcomingFragment)
             }
 
             R.id.nav_live_matches -> {
-                toast("Selected Live Matches")
+                Navigation.findNavController(requireView())
+                    .navigate(R.id.action_dashboardFragment_to_liveMatchesFragment)
             }
         }
     }
@@ -119,6 +123,14 @@ class DashboardFragment : Fragment() {
             R.string.drawer_open,
             R.string.drawer_close
         )
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
 }

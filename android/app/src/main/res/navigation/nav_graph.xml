@@ -48,20 +48,36 @@
         android:id="@+id/liveMatchesFragment"
         android:name="com.thedevgang.liga.presentation.ui.livematches.LiveMatchesFragment"
         android:label="live_matches_fragment"
-        tools:layout="@layout/live_matches_fragment" />
+        tools:layout="@layout/live_matches_fragment" >
+        <action
+            android:id="@+id/action_liveMatchesFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/messagesFragment"
         android:name="com.thedevgang.liga.presentation.ui.messages.MessagesFragment"
         android:label="messages_fragment"
-        tools:layout="@layout/messages_fragment" />
+        tools:layout="@layout/messages_fragment" >
+        <action
+            android:id="@+id/action_messagesFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/teamsFragment"
         android:name="com.thedevgang.liga.presentation.ui.teams.TeamsFragment"
         android:label="teams_fragment"
-        tools:layout="@layout/teams_fragment" />
+        tools:layout="@layout/teams_fragment" >
+        <action
+            android:id="@+id/action_teamsFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/upcomingFragment"
         android:name="com.thedevgang.liga.presentation.ui.upcoming.UpcomingFragment"
         android:label="upcoming_fragment"
-        tools:layout="@layout/upcoming_fragment" />
+        tools:layout="@layout/upcoming_fragment" >
+        <action
+            android:id="@+id/action_upcomingFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
 </navigation>
