@@ -5,6 +5,7 @@ buildscript {
     ext.rxjava_version = "2.2.19"
     ext.rxandroid_version = "2.1.1"
     ext.anko_version='0.10.8'
+    ext.retrofit_version = '2.9.0'
 
     repositories {
         google()

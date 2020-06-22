@@ -13,4 +13,13 @@
     <string name="menu_players">Players</string>
     <string name="menu_teams">Teams</string>
     <string name="menu_messages">Messages</string>
+
+    <string name="default_board">0 : 0</string>
+    <string name="default_hometeam_name">Home</string>
+    <string name="default_hometeam_city">Home City</string>
+    <string name="default_visitorteam_name">Away</string>
+    <string name="default_visitorteam_city">Away City</string>
+
+    <string name="lineups_caption">Lineups</string>
+    <string name="goals_caption">Goals</string>
 </resources>

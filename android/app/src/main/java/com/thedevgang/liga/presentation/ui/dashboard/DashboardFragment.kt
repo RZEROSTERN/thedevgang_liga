@@ -2,6 +2,7 @@ package com.thedevgang.liga.presentation.ui.dashboard
 
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.MenuItem
@@ -14,8 +15,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.thedevgang.liga.R
+import com.thedevgang.liga.data.dao.Match
+import com.thedevgang.liga.presentation.ui.dashboard.adapters.MatchesAdapter
 import org.jetbrains.anko.support.v4.toast
 
 class DashboardFragment : Fragment() {
@@ -28,6 +33,7 @@ class DashboardFragment : Fragment() {
     private var toolbar: Toolbar? = null
     private lateinit var drawerLayout: DrawerLayout
     private lateinit var navigationView: NavigationView
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +71,20 @@ class DashboardFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
 
+        var matches = viewModel.retrieveMatches()
+
+        initRecyclerView(matches)
+
         initDrawerLayout(savedInstanceState)
+    }
+
+    private fun initRecyclerView(matches: MutableList<Match>) {
+        val matchesAdapter = MatchesAdapter(matches, requireContext())
+
+        recyclerView = requireView().findViewById(R.id.rv_dashboard)
+        recyclerView.setHasFixedSize(true)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = matchesAdapter
     }
 
     private fun initDrawerLayout(savedInstanceState: Bundle?) {
