@@ -1,33 +1,30 @@
 package com.thedevgang.liga.presentation.ui.dashboard
 
+import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.thedevgang.liga.data.dao.Fixture
 import com.thedevgang.liga.data.dao.Match
+import com.thedevgang.liga.interactor.FixturesInteractorImp
+import com.thedevgang.liga.repository.FixturesRepositoryImp
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class DashboardViewModel : ViewModel() {
-    fun retrieveMatches() : MutableList<Match> {
-        var matches : MutableList<Match> = ArrayList()
+    private val fixturesInteractorImp = FixturesInteractorImp(FixturesRepositoryImp())
+    private val compositeDisposable = CompositeDisposable()
+    private val TAG = DashboardViewModel::class.java.simpleName
 
-        matches.add(Match("Bayern Munchen", "Munich, Germany",
-            "https://cdn.icon-icons.com/icons2/1018/PNG/256/Bayern_Munchen_icon-icons.com_75868.png",
-            "2", "Real Madrid C.F.",
-            "Madrid, Spain",
-            "https://cdn.icon-icons.com/icons2/1637/PNG/256/real-madrid_109486.png",
-            "1"))
+    var fixtures: MutableLiveData<MutableList<Fixture>> = MutableLiveData()
 
-        matches.add(Match("Borussia Dortmund", "Dortmund, Germany",
-            "https://cdn.icon-icons.com/icons2/1018/PNG/256/Borussia_Dortmund_icon-icons.com_75869.png",
-            "4", "Barcelona F.C.",
-            "Barcelona, Spain",
-            "https://cdn.icon-icons.com/icons2/104/PNG/256/fc_barcelona_footballteam_18015.png",
-            "0"))
-
-        matches.add(Match("Juventus", "Turin, Italy",
-            "https://p1.hiclipart.com/preview/746/421/93/juventus-logo-png-clipart.jpg",
-            "3", "Paris St. Germain",
-            "Paris, France",
-            "https://cdn.icon-icons.com/icons2/383/PNG/256/Paris-Saint-Germain-icon-256_37658.png",
-            "3"))
-
-        return matches
+    fun retrieveFixtures(date: String) {
+        compositeDisposable.add(
+            fixturesInteractorImp.getFixturesByDate(date)
+                .subscribeOn(Schedulers.io())
+                .subscribe(
+                    {res -> fixtures.postValue(res.fixtureData.fixtures)},
+                    {t: Throwable? -> Log.e(TAG, t!!.message)}
+                )
+        )
     }
 }

@@ -23,6 +23,15 @@ android {
         }
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
 }
 
 dependencies {
@@ -51,6 +60,11 @@ dependencies {
 
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.okhttp3:okhttp:$okhttp_version"
+    implementation "com.squareup.okhttp3:logging-interceptor:$okhttpinterceptor_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofitadapters_version"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitadapters_version"
+
 
     implementation "com.android.support:support-fragment:29.1.0"
 

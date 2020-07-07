@@ -14,20 +14,21 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getColor
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.navigation.NavigationView
 import com.thedevgang.liga.R
+import com.thedevgang.liga.data.dao.Fixture
 import com.thedevgang.liga.data.dao.Match
 import com.thedevgang.liga.presentation.ui.dashboard.adapters.MatchesAdapter
 import org.jetbrains.anko.support.v4.toast
 
 class DashboardFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = DashboardFragment()
-    }
+    private val TAG = DashboardFragment::class.java.simpleName
 
     private lateinit var viewModel: DashboardViewModel
     private var toolbar: Toolbar? = null
@@ -69,18 +70,18 @@ class DashboardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this).get(DashboardViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(DashboardViewModel::class.java)
+        viewModel.fixtures.observe(viewLifecycleOwner, Observer {
+            initRecyclerView(it)
+        })
 
-        var matches = viewModel.retrieveMatches()
-
-        initRecyclerView(matches)
+        viewModel.retrieveFixtures("2020-07-06")
 
         initDrawerLayout(savedInstanceState)
     }
 
-    private fun initRecyclerView(matches: MutableList<Match>) {
+    private fun initRecyclerView(matches: MutableList<Fixture>) {
         val matchesAdapter = MatchesAdapter(matches, requireContext())
-
         recyclerView = requireView().findViewById(R.id.rv_dashboard)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
